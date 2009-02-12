@@ -18,7 +18,7 @@ class AIM
     #
     #   log_chatroom :some_chatroom, :output => 'some_chatroom.log'
     #
-    #   when :im_received do |im|
+    #   when :im do |im|
     #     im_user im.user, "thanks for the IM, #{ im.user.name }"
     #   end
     #
@@ -33,11 +33,19 @@ class AIM
     # this auto logs in too
     #
     def login_as_user username, password, &block
-      user = get_user username, password
-      user.login!
-      user.instance_eval &block if block
-      user.wait!
-      user
+      @block = block if block
+      @user = get_user username, password
+      @user.login!
+
+      reload! # take the @user, clear all of the user's event subscriptions, and reload the block
+      
+      @user.wait!
+      @user
+    end
+
+    def reload!
+      @user.clear_events!
+      @user.instance_eval &@block
     end
 
     # returns an AIM::User, but does not login
@@ -57,6 +65,11 @@ class AIM
 
     def login!
       connection.connect
+    end
+
+    # undoes all event subscriptions
+    def clear_events!
+      connection.clear_callbacks!
     end
 
     # do something on an event

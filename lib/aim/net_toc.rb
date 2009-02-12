@@ -567,6 +567,10 @@ module Net
       def idle_time=(seconds)
         @conn.toc_set_idle seconds
       end
+
+      def clear_callbacks!
+        @callbacks = { }
+      end
       
       # Waits for the event-handling thread for +limit+ seconds, or indefinitely if no argument is given. Use this to prevent your program from exiting prematurely.
       # For example, the following script will exit right after connecting:

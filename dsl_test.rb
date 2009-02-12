@@ -20,10 +20,10 @@ if screenname.empty? or password.empty?
   exit
 end
 
-AIM.login_as_user( screenname, password ) do
-  
-  im_user 'some user to IM', "hello!  the time is #{ Time.now }"
+$authorized_user = 'remitaylor'
 
-  log_chatroom 'some chat room to log into'
+AIM.login_as_user( screenname, password ) do
+
+  eval( File.read( File.dirname(__FILE__) + '/im_block.rb' ) )
 
 end
