@@ -3,9 +3,9 @@
 require 'rubygems'
 require 'aim'
 
-AIM.login_as_user( 'bob', 'secret' ).and {
+AIM.login_as_user( 'bob', 'secret' ).and do
 
-  log_chatroom :some_chatroom, :output => 'logs/some_chatroom.log'
+  log_chatroom :some_chatroom
 
   im_user :bob, 'hello bob!'
 
@@ -13,4 +13,4 @@ AIM.login_as_user( 'bob', 'secret' ).and {
     reply_with 'thanks for your message'
   end
 
-}
+end

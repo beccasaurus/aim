@@ -7,10 +7,10 @@
 # 
 # See Net::TOC for documentation.
 
-
 require 'socket'
 
 module Net
+
   # == Overview
   # === Opening a Connection
   # Pass Net::Toc.new your screenname and password to create a new connection.
