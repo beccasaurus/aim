@@ -531,7 +531,9 @@ module Net
           puts "chat_in val => #{ val.inspect }"
           room_id, screen_name, auto, *message = *val.split(":")
           message = message.join(":")
+          message = message.gsub('<br>',"\n") # ... before getting rid of html
           message = message.chomp.gsub(/<[^>]+>/,"") # get rid of html
+          message = message.gsub("\n",'<br />') # ... turn newlines back into br's
           buddy = @buddy_list.buddy_named(screen_name)
           room = @rooms[room_id] || room_id
           auto_response = auto == "T"
